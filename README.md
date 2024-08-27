@@ -90,12 +90,14 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
       );
 
       -- Survey Questions Table
-      CREATE TABLE survey_questions (
-          id SERIAL PRIMARY KEY,
+      CREATE TABLE questions (
+          question_id SERIAL PRIMARY KEY,
           question TEXT NOT NULL,
-          options TEXT NOT NULL,  -- Store options as a comma-separated string
-          type VARCHAR(50) NOT NULL
+          options TEXT NOT NULL, -- Comma-separated options
+          correct_answer VARCHAR(255) NOT NULL
       );
+
+      
 
       -- Survey Responses Table
       CREATE TABLE survey_responses (
@@ -108,20 +110,11 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
           FOREIGN KEY (question_id) REFERENCES survey_questions(id) ON DELETE CASCADE
       );
 
-      -- Feedback Table
-      CREATE TABLE feedback (
-          feedback_id SERIAL PRIMARY KEY,
-          userid INT NOT NULL UNIQUE,  -- Ensure that each user can have only one feedback entry
-          surveyResponse TEXT,
-          suggestion TEXT,
-          email VARCHAR(255),
-          FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
-      );
       ```
 6. **Start the application:**
 
     ```bash
-    nodemon index.js
+    nodemon main.js
     ```
 
 7. **Access the application:**
