@@ -76,34 +76,48 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
     - Create the required tables:
 
       ```sql
+      -- Users Table
       CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    mobile_number VARCHAR(15) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    score INTEGER DEFAULT 0,
-    token_no VARCHAR(255), -- Token for password reset
-    token_timestamp TIMESTAMP -- Timestamp for when the token was generated
-);
+          userid SERIAL PRIMARY KEY,
+          fname VARCHAR(255) NOT NULL,
+          mname VARCHAR(255),
+          lname VARCHAR(255),
+          mobilenumber VARCHAR(15),
+          email VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          token_no VARCHAR(255),
+          token_timestamp TIMESTAMP
+      );
 
-CREATE TABLE questions (
-    question_id SERIAL PRIMARY KEY,
-    question TEXT NOT NULL,
-    options TEXT NOT NULL, -- Comma-separated options
-    correct_answer VARCHAR(255) NOT NULL
-);
+      -- Survey Questions Table
+      CREATE TABLE survey_questions (
+          id SERIAL PRIMARY KEY,
+          question TEXT NOT NULL,
+          options TEXT NOT NULL,  -- Store options as a comma-separated string
+          type VARCHAR(50) NOT NULL
+      );
 
-CREATE TABLE user_answers (
-    user_answer_id SERIAL PRIMARY KEY,
-    userid INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
-    question TEXT NOT NULL,
-    selected_option VARCHAR(255) NOT NULL,
-    UNIQUE(userid, question) -- Ensures a user can only answer each question once
-);
+      -- Survey Responses Table
+      CREATE TABLE survey_responses (
+          response_id SERIAL PRIMARY KEY,
+          user_id INT NOT NULL,
+          question_id INT NOT NULL,
+          response TEXT NOT NULL,
+          UNIQUE (user_id, question_id),  -- Ensure that each user can only respond to each question once
+          FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,
+          FOREIGN KEY (question_id) REFERENCES survey_questions(id) ON DELETE CASCADE
+      );
+
+      -- Feedback Table
+      CREATE TABLE feedback (
+          feedback_id SERIAL PRIMARY KEY,
+          userid INT NOT NULL UNIQUE,  -- Ensure that each user can have only one feedback entry
+          surveyResponse TEXT,
+          suggestion TEXT,
+          email VARCHAR(255),
+          FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
+      );
       ```
-
 6. **Start the application:**
 
     ```bash
