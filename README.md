@@ -102,7 +102,6 @@ CREATE TABLE user_answers (
     selected_option VARCHAR(255) NOT NULL,
     UNIQUE(userid, question) -- Ensures a user can only answer each question once
 );
-
       ```
 
 6. **Start the application:**
