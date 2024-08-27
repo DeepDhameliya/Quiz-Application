@@ -89,7 +89,7 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
           token_timestamp TIMESTAMP
       );
 
-      -- Survey Questions Table
+      -- questions Table
       CREATE TABLE questions (
           question_id SERIAL PRIMARY KEY,
           question TEXT NOT NULL,
@@ -97,17 +97,13 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
           correct_answer VARCHAR(255) NOT NULL
       );
 
-      
-
-      -- Survey Responses Table
-      CREATE TABLE survey_responses (
-          response_id SERIAL PRIMARY KEY,
-          user_id INT NOT NULL,
-          question_id INT NOT NULL,
-          response TEXT NOT NULL,
-          UNIQUE (user_id, question_id),  -- Ensure that each user can only respond to each question once
-          FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,
-          FOREIGN KEY (question_id) REFERENCES survey_questions(id) ON DELETE CASCADE
+      -- answers Table
+      CREATE TABLE user_answers (
+          user_answer_id SERIAL PRIMARY KEY,
+          userid INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+          question TEXT NOT NULL,
+          selected_option VARCHAR(255) NOT NULL,
+          UNIQUE(userid, question) -- Ensures a user can only answer each question once
       );
 
       ```
