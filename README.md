@@ -78,16 +78,16 @@ This is a Quiz application built using HTML, CSS, and JavaScript for the fronten
       ```sql
       -- Users Table
       CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    mobile_number VARCHAR(15) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    score INTEGER DEFAULT 0,
-    token_no VARCHAR(255), -- Token for password reset
-    token_timestamp TIMESTAMP -- Timestamp for when the token was generated
-);
+          userid SERIAL PRIMARY KEY,
+          first_name VARCHAR(50) NOT NULL,
+          last_name VARCHAR(50) NOT NULL,
+          mobile_number VARCHAR(15) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          score INTEGER DEFAULT 0,
+          token_no VARCHAR(255),
+          token_timestamp TIMESTAMP
+      );
 
       -- Survey Questions Table
       CREATE TABLE survey_questions (
